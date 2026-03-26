@@ -44,9 +44,16 @@
         </div>
 
         <div class="mb-6">
-            <label class="relative cursor-pointer bg-red-600 text-white p-4 hover:bg-blue-800 font-semibold py-2 px-4 rounded-lg transition duration-200 shadow-md">
-                <span>Seleccionar comprobante</span>
-                <input type="file" wire:model="comprobanteFile" class="hidden" accept=".pdf,.jpg,.jpeg,.png">
+            <label class="relative cursor-pointer bg-red-600 text-white p-4 hover:bg-blue-800 font-semibold py-2 px-4 rounded-lg transition duration-200 shadow-md" wire:loading.attr="disabled" wire:loading.class="opacity-50 cursor-not-allowed">
+                <span wire:loading.remove>Seleccionar comprobante</span>
+                <span wire:loading>
+                    <svg class="inline animate-spin h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Cargando...
+                </span>
+                <input type="file" wire:model="comprobanteFile" class="hidden" accept=".pdf,.jpg,.jpeg,.png" wire:loading.attr="disabled">
             </label>
             @if($comprobanteFile)
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mt-3">Archivo: {{ $comprobanteFile->getClientOriginalName() }}</label>
