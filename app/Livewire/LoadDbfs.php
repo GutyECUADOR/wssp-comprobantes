@@ -28,6 +28,7 @@ class LoadDbfs extends Component
         return view('livewire.load-dbfs');
     }
     
+    /*Magic method updatedPROPERTY */
     public function updatedDbfFile()
     {
         $this->validate();
