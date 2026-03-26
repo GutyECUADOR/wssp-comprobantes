@@ -61,6 +61,13 @@
             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mt-3">Se aceptan imágenes y archivos PDF, Máximo 5MB</label>
         </div>
 
+        <div>
+            <div class="mb-6">
+                <div class="g-recaptcha" data-sitekey="{{ config('services.recaptcha.site_key') }}"></div>
+            </div>
+            <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+        </div>
+
         <div class="flex justify-end">
             <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">Registrar</button>
         </div>
