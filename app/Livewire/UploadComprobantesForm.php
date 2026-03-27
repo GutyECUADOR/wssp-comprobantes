@@ -35,7 +35,7 @@ class UploadComprobantesForm extends Component
         $this->validate();
 
 
-        $this->path = $this->comprobanteFile->store('comprobantes');
+        $this->path = $this->comprobanteFile->store('comprobantes', 'public');
         $this->comprobanteFile->storeAs('comprobantes', $this->numero_pedido . '.' . $this->comprobanteFile->getClientOriginalExtension());
       
         Comprobante::create([
