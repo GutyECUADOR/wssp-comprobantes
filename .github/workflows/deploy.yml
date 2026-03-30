@@ -30,10 +30,14 @@ jobs:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
+        # Aquí defines la carpeta de destino en el servidor
+        server-dir: ./laravel/
         # Excluye carpetas innecesarias para ahorrar tiempo y espacio
+        # Si deseas que el proyecto cargue vendor automáticamente, descomentar linea correspondiente. Tiempo de subida de vendor 1h 13min
         exclude: |
           **/.git*
           **/node_modules/**
+          **/vendor/**
           **/tests/**
           storage/*.sqlite
     - name: Finalize Deployment (Run Migrations & Cache)
