@@ -24,6 +24,16 @@ jobs:
     - name: Create .env file
       run: echo "${{ secrets.DOT_ENV }}" > .env
 
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18' # O la versión que uses localmente
+
+    - name: Install NPM dependencies & Build
+      run: |
+        npm install
+        npm run build
+
     - name: Sync files via FTP
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
@@ -33,11 +43,10 @@ jobs:
         # Aquí defines la carpeta de destino en el servidor
         server-dir: ./laravel/
         # Excluye carpetas innecesarias para ahorrar tiempo y espacio
-        # Si deseas que el proyecto cargue vendor automáticamente, descomentar linea correspondiente. Tiempo de subida de vendor 1h 13min
+        # **/vendor/** Si deseas que el proyecto cargue vendor automáticamente, descomentar linea correspondiente. Tiempo de subida de vendor 1h 13min
         exclude: |
           **/.git*
           **/node_modules/**
-          **/vendor/**
           **/tests/**
           storage/*.sqlite
     - name: Finalize Deployment (Run Migrations & Cache)
