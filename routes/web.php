@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,5 +23,24 @@ Route::view('dashboard', 'dashboard')
 Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
+
+/* Deploy Helper in Shared Hosting */
+Route::get('/deploy-helper', function () {
+    Artisan::call('migrate', ['--force' => true]);
+    Artisan::call('config:cache');
+    return "Despliegue finalizado con éxito";
+});
+
+Route::get('/deploy-finish', function () {
+    // Ejecuta las migraciones pendientes
+    Artisan::call('migrate', ['--force' => true]);
+    
+    // Limpia y regenera la caché de rutas y configuración
+    Artisan::call('config:cache');
+    Artisan::call('route:cache');
+    Artisan::call('view:cache');
+
+    return "Despliegue completado con éxito y caché optimizada.";
+});
 
 require __DIR__.'/auth.php';

@@ -1,0 +1,40 @@
+name: Deploy Laravel Project
+
+on:
+  push:
+    branches: [ main ] # Se ejecuta cuando haces push a main
+
+jobs:
+  web-deploy:
+    name: Deploying to Shared Hosting
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout del código
+      uses: actions/checkout@v3
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2'
+
+    - name: Install Dependencies (Composer)
+      run: composer install --no-dev --optimize-autoloader
+
+    - name: Create .env file
+      run: echo "${{ secrets.DOT_ENV }}" > .env
+
+    - name: Sync files via FTP
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        # Excluye carpetas innecesarias para ahorrar tiempo y espacio
+        exclude: |
+          **/.git*
+          **/node_modules/**
+          **/tests/**
+          storage/*.sqlite
+    - name: Finalize Deployment (Run Migrations & Cache)
+      run: curl -s "https://${{ secrets.DOMINIO }}/deploy-finish"
