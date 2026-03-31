@@ -34,7 +34,8 @@ Route::get('/deploy-helper', function () {
 Route::get('/deploy-finish', function () {
     // Ejecuta las migraciones pendientes
     Artisan::call('migrate', ['--force' => true]);
-    
+    Artisan::call('db:seed');
+
     // Limpia y regenera la caché de rutas y configuración
     Artisan::call('config:cache');
     Artisan::call('route:cache');
