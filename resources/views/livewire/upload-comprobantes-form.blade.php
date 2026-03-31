@@ -31,7 +31,7 @@
         </div>
 
         <div class="mb-6">
-            <label for="banco" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Banco</label>
+            <label for="banco" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Banco emisor</label>
             <select id="banco" name="banco" wire:model="banco" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white">
                 <option value="">Selecciona el banco</option>
                 <option value="Pichincha">Banco Pichincha</option>
