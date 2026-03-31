@@ -50,4 +50,7 @@ jobs:
           **/tests/**
           storage/*.sqlite
     - name: Finalize Deployment (Run Migrations & Cache)
-      run: curl -s "https://${{ secrets.DOMINIO }}/deploy-finish"
+      run: curl -s "https://kaosportcenter.com/deploy-finish"
+    
+    - name: Create Storage Link
+      run: curl -s "https://kaosportcenter.com/linkstorage"
