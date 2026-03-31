@@ -22,6 +22,10 @@ Route::view('dashboard', 'dashboard')
 
 Route::get('/linkstorage', function () {
     Artisan::call('storage:link');
+    return response()->json([
+            'status' => 'success',
+            'message' => 'Storage:link ejecutado.'
+        ]);
 });
 
 Route::view('profile', 'profile')
