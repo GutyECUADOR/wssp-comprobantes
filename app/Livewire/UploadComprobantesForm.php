@@ -22,13 +22,16 @@ class UploadComprobantesForm extends Component
         'comprobanteFile' => 'required|mimes:pdf,jpg,jpeg,png|max:5120', // 5MB max
     ];
 
-    protected $messages = [
-        'numero_pedido.required' => 'El número de pedido es obligatorio.',
-        'numero_pedido.unique' => 'El número de pedido ya existe.',
-        'comprobanteFile.required' => 'El archivo de comprobante es obligatorio.',
-        'comprobanteFile.mimes' => 'El archivo debe ser una imagen (jpg, jpeg, png) o un PDF.',
-        'comprobanteFile.max' => 'El archivo no debe superar los 5MB.',
-    ];
+    protected function messages()
+    {
+        return [
+            'numero_pedido.required' => 'El número de pedido es obligatorio.',
+            'numero_pedido.unique'   => 'El número de pedido ' . $this->numero_pedido . ' ya existe en nuestros registros.',
+            'comprobanteFile.required' => 'El archivo de comprobante es obligatorio.',
+            'comprobanteFile.mimes'    => 'El archivo debe ser una imagen (jpg, jpeg, png) o un PDF.',
+            'comprobanteFile.max'      => 'El archivo no debe superar los 5MB.',
+        ];
+    }
 
     public function save()
     {
@@ -37,7 +40,7 @@ class UploadComprobantesForm extends Component
 
         $this->path = $this->comprobanteFile->store('comprobantes', 'public');
         $this->comprobanteFile->storeAs('comprobantes', $this->numero_pedido . '.' . $this->comprobanteFile->getClientOriginalExtension());
-      
+
         Comprobante::create([
             'numero_pedido' => $this->numero_pedido,
             'nombre_cliente' => $this->nombre_cliente,
