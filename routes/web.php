@@ -37,11 +37,13 @@ Route::get('/linkstorage', function () {
     }
 });
 
-Route::get('/clear-cache', function() {
-    Artisan::call('route:clear');
-    Artisan::call('config:clear');
-    Artisan::call('cache:clear');
-    return "Caché de rutas y configuración limpia";
+Route::get('/link-storage', function () {
+    Artisan::call('storage:link');
+    return response()->json([
+            'status' => 'success',
+            'message' => 'Storage:link ejecutado.'
+
+        ]);
 });
 
 Route::view('profile', 'profile')
@@ -55,9 +57,9 @@ Route::get('/deploy-finish', function () {
     Artisan::call('db:seed', ['--force' => true]);
 
     // Limpia y regenera la caché de rutas y configuración
-    Artisan::call('config:cache');
-    Artisan::call('route:cache');
-    Artisan::call('view:cache');
+    //Artisan::call('config:cache');
+    //Artisan::call('route:cache');
+    //Artisan::call('view:cache');
 
     return response()->json([
             'status' => 'success',
