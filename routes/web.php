@@ -21,11 +21,27 @@ Route::view('dashboard', 'dashboard')
     ->name('dashboard');
 
 Route::get('/linkstorage', function () {
-    Artisan::call('storage:link');
-    return response()->json([
-            'status' => 'success',
-            'message' => 'Storage:link ejecutado.'
-        ]);
+    // Ruta origen: donde están los archivos reales
+    $target = '/home/kao/laravel/storage/app/public'; 
+    // Ruta destino: donde quieres que se vea el acceso directo
+    $link = '/home/kao/public_html/storage'; 
+
+    if (file_exists($link)) {
+        return "El enlace simbólico ya existe.";
+    }
+
+    if (symlink($target, $link)) {
+        return "Enlace simbólico creado exitosamente de $target a $link";
+    } else {
+        return "Error: No se pudo crear el enlace simbólico. Verifica los permisos.";
+    }
+});
+
+Route::get('/clear-cache', function() {
+    Artisan::call('route:clear');
+    Artisan::call('config:clear');
+    Artisan::call('cache:clear');
+    return "Caché de rutas y configuración limpia";
 });
 
 Route::view('profile', 'profile')
